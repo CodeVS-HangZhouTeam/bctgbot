@@ -13,8 +13,6 @@ func main() {
     tgbot, err := tgbotapi.NewBotAPI(tg_token)
     if err != nil { log.Panic(err) }
 
-    tgbot.Debug = true
-
     log.Printf("Telegram connected: %s", tgbot.Self.UserName)
 
     tgupdate := tgbotapi.NewUpdate(0)
@@ -27,6 +25,10 @@ func main() {
     if err != nil { log.Panic(err) }
 
     for update := range tgbot.Updates {
+        if update.Message.Chat.ID != tg_chat_id {
+            log.Printf("Get a message from Chat ID %d, but %d != %d", update.Message.Chat.ID, update.Message.Chat.ID, tg_chat_id)
+            continue
+        }
         log.Printf("Message: [%s] %s", update.Message.From.UserName, update.Message.Text)
         if len(update.Message.Text) != 0 {
             var msg_text string
