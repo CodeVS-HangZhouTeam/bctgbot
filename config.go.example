@@ -1,0 +1,4 @@
+package main
+
+const tg_token = "MyBotToken"
+const bc_token_in = "https://hook.bearychat.com/your_webhook_url"
